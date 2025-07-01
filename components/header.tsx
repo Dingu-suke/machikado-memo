@@ -14,9 +14,6 @@ export function Header({ breadcrumb }: HeaderProps) {
             {breadcrumb}
           </div>
           <nav className="flex items-center gap-6">
-            <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
-              ホーム
-            </Link>
             <ThemeToggle />
           </nav>
         </div>

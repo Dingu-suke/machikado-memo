@@ -1,59 +1,67 @@
 import fs from "fs"
-import path from "path"
 import matter from "gray-matter"
+import path from "path"
 
-const postsDirectory = path.join(process.cwd(), "content/posts")
+const shopsDirectory = path.join(process.cwd(), "content/shops")
 
-export interface BlogPost {
-  slug: string
-  title: string
-  date: string
-  excerpt: string
-  author: string
+export interface ShopRecord {
+  area: string // 街名
+  slug: string // ファイル名ベース
+  name: string
+  address: string
+  image: string
+  description: string
   tags: string[]
   content: string
 }
 
-export function getAllPosts(): BlogPost[] {
-  const fileNames = fs.readdirSync(postsDirectory)
-  const allPostsData = fileNames
+// 街一覧を取得
+export function getAllAreas(): string[] {
+  return fs.readdirSync(shopsDirectory).filter((name) => {
+    const fullPath = path.join(shopsDirectory, name)
+    return fs.statSync(fullPath).isDirectory()
+  })
+}
+
+// 街ごとのお店一覧を取得
+export function getShopsByArea(area: string): ShopRecord[] {
+  const areaDir = path.join(shopsDirectory, area)
+  if (!fs.existsSync(areaDir)) return []
+  const fileNames = fs.readdirSync(areaDir)
+  return fileNames
     .filter((fileName) => fileName.endsWith(".md"))
     .map((fileName) => {
       const slug = fileName.replace(/\.md$/, "")
-      const fullPath = path.join(postsDirectory, fileName)
+      const fullPath = path.join(areaDir, fileName)
       const fileContents = fs.readFileSync(fullPath, "utf8")
       const { data, content } = matter(fileContents)
-
       return {
+        area,
         slug,
         content,
-        title: data.title,
-        date: data.date,
-        excerpt: data.excerpt,
-        author: data.author,
+        name: data.name,
+        address: data.address,
+        image: data.image,
+        description: data.description,
         tags: data.tags || [],
-      } as BlogPost
+      } as ShopRecord
     })
-
-  return allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1))
 }
 
-export function getPostBySlug(slug: string): BlogPost | null {
-  try {
-    const fullPath = path.join(postsDirectory, `${slug}.md`)
-    const fileContents = fs.readFileSync(fullPath, "utf8")
-    const { data, content } = matter(fileContents)
-
-    return {
-      slug,
-      content,
-      title: data.title,
-      date: data.date,
-      excerpt: data.excerpt,
-      author: data.author,
-      tags: data.tags || [],
-    } as BlogPost
-  } catch (error) {
-    return null
-  }
+// お店詳細を取得
+export function getShopByAreaAndSlug(area: string, slug: string): ShopRecord | null {
+  const fullPath = path.join(shopsDirectory, area, `${slug}.md`)
+  if (!fs.existsSync(fullPath)) return null
+  const fileContents = fs.readFileSync(fullPath, "utf8")
+  const { data, content } = matter(fileContents)
+  return {
+    area,
+    slug,
+    content,
+    name: data.name,
+    address: data.address,
+    image: data.image,
+    description: data.description,
+    tags: data.tags || [],
+  } as ShopRecord
 }

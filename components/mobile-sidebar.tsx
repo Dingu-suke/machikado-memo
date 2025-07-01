@@ -31,9 +31,12 @@ export function MobileSidebar({ areas }: MobileSidebarProps) {
   return (
     <>
       {/* モバイル用ハンバーガー */}
-      <div className="fixed top-4 left-4 z-50 md:hidden">
-        <button onClick={() => setIsOpen(!isOpen)} className="p-2 rounded-2xl hover:bg-slate-200 dark:hover:bg-gray-800">
-          <Menu className="h-7 w-7" />
+  <div className="fixed top-4 left-4 z-50 md:hidden">
+        <button 
+          onClick={() => setIsOpen(!isOpen)} 
+          className="p-2 rounded-2xl backdrop-blur-md bg-white/10 dark:bg-gray-500/10 hover:bg-white/90 dark:hover:bg-gray-500/90 shadow-lg border border-gray-300/50 hover:border-cyan-400/50 dark:border-gray-700/50 transition-all duration-200"
+        >
+          <Menu className="h-7 w-7 text-cyan-500" />
         </button>
       </div>
       

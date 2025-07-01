@@ -51,7 +51,7 @@ export function MobileSidebar({ areas }: MobileSidebarProps) {
         {/* タイトル */}
         <div className="pt-6 pb-5 p-6 border-b border-gray-200 dark:border-gray-700">
           <Link href="/" onClick={() => setIsOpen(false)} className="text-xl font-bold">
-            まちまど店メモ
+            街かどメモ
           </Link>
         </div>
         {/* 街リスト */}

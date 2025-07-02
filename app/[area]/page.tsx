@@ -39,11 +39,11 @@ export default function AreaPage({ params }: AreaPageProps) {
     <>
       <Header breadcrumb={breadcrumb} />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">{decodedArea}の街かどメモ</h1>
+        <h3 className="text-2xl font-bold mb-8">{decodedArea}の街かど</h3>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {shops.map((shop) => (
             <Link key={shop.slug} href={`/${params.area}/${shop.slug}`} className="block group h-full">
-              <div className="rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow bg-white dark:bg-gray-900 h-full flex flex-col">
+              <div className="rounded-lg overflow-hidden shadow-xl transition-all transform hover:-translate-y-2 hover:shadow-2xl border border-border-100 dark:border-gray-700 bg-white dark:bg-gray-900 h-full flex flex-col">
                 <div className="relative w-full h-48 flex-shrink-0">
                   <Image src={shop.image} alt={shop.name} fill className="object-cover" />
                 </div>

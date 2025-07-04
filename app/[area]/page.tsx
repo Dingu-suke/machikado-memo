@@ -11,6 +11,7 @@ import {
 import { getShopsByArea } from "@/lib/markdown"
 import Image from "next/image"
 import Link from "next/link"
+import { IoMdPin } from "react-icons/io"
 
 interface AreaPageProps {
   params: { area: string }
@@ -52,7 +53,10 @@ export default async function AreaPage({ params }: AreaPageProps) {
                 <div className="p-4 flex flex-col flex-grow">
                   <h2 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors truncate">{shop.name}</h2>
                   <p className="text-muted-foreground mb-2 line-clamp-3 h-12">{shop.description}</p>
-                  <div className="text-xs text-gray-500 mb-3 truncate h-4">{shop.address}</div>
+                  <div className="text-xs text-gray-500 mb-3 truncate h-4 flex items-center">
+                    <IoMdPin className="mr-1 flex-shrink-0" />
+                    {shop.address}
+                  </div>
                   
                   {/* 住所とタグの間の区切り線 - 固定位置に配置 */}
                   <div className="border-t border-gray-200 dark:border-gray-700 mb-3"></div>

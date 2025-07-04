@@ -14,6 +14,7 @@ import { getShopByAreaAndSlug } from "@/lib/markdown"
 import { ArrowLeft } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { IoMdPin } from "react-icons/io"
 
 interface ShopPageProps {
   params: { area: string; shop: string }
@@ -66,8 +67,11 @@ export default async function ShopPage({ params }: ShopPageProps) {
             <Image src={shop.image} alt={shop.name} fill className="object-cover" />
           </div>
           <h1 className="text-3xl font-bold mb-2">{shop.name}</h1>
-          <div className="text-muted-foreground mb-2">{shop.address}</div>
-          <div className="mb-2">{shop.description}</div>
+          <div className="text-muted-foreground mb-2 flex items-center">
+            <IoMdPin className="mr-0.5 mb-0.5 flex-shrink-0 text-lg" />
+            <div className="flex-grow">{shop.address}</div>
+          </div>
+          <div className="mb-4">{shop.description}</div>
           <div className="mb-4">
             <TagDisplay 
               tags={shop.tags}

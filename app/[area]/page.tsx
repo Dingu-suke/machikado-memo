@@ -52,7 +52,7 @@ export default async function AreaPage({ params }: AreaPageProps) {
                 </div>
                 <div className="p-4 flex flex-col flex-grow">
                   <h2 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors truncate">{shop.name}</h2>
-                  <p className="text-muted-foreground mb-2 line-clamp-3 h-12">{shop.description}</p>
+                  <p className="text-muted-foreground mb-2 line-clamp-3">{shop.description}</p>
                   <div className="text-xs text-gray-500 mb-3 truncate h-4 flex items-center">
                     <IoMdPin className="mr-1 flex-shrink-0" />
                     {shop.address}

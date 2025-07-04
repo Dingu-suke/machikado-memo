@@ -12,6 +12,10 @@ export interface ShopRecord {
   image: string
   description: string
   tags: string[]
+  price_tags: string[]
+  scene_tags: string[]  // 利用シーンタグ（ピンク色）
+  access_tags: string[] // アクセスタグ（水色）
+  business_tags: string[] // 営業情報タグ（黄色）
   content: string
 }
 
@@ -44,6 +48,10 @@ export function getShopsByArea(area: string): ShopRecord[] {
         image: data.image,
         description: data.description,
         tags: data.tags || [],
+        price_tags: data.price_tags || [], // 料金タグを追加
+        scene_tags: data.scene_tags || [],  // 利用シーンタグを追加
+        access_tags: data.access_tags || [], // アクセスタグを追加
+        business_tags: data.business_tags || [], // 営業情報タグを追加
       } as ShopRecord
     })
 }
@@ -63,5 +71,9 @@ export function getShopByAreaAndSlug(area: string, slug: string): ShopRecord | n
     image: data.image,
     description: data.description,
     tags: data.tags || [],
+    price_tags: data.price_tags || [], // 料金タグを追加
+    scene_tags: data.scene_tags || [],  // 利用シーンタグを追加
+    access_tags: data.access_tags || [], // アクセスタグを追加
+    business_tags: data.business_tags || [], // 営業情報タグを追加
   } as ShopRecord
 }

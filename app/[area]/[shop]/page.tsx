@@ -1,5 +1,6 @@
 import { Header } from "@/components/header"
 import { MarkdownRenderer } from "@/components/markdown-renderer"
+import { TagDisplay } from "@/components/tag-display"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -18,9 +19,10 @@ interface ShopPageProps {
   params: { area: string; shop: string }
 }
 
-export default function ShopPage({ params }: ShopPageProps) {
-  const decodedArea = decodeURIComponent(params.area)
-  const decodedShop = decodeURIComponent(params.shop)
+export default async function ShopPage({ params }: ShopPageProps) {
+  const resolvedParams = await params
+  const decodedArea = decodeURIComponent(resolvedParams.area)
+  const decodedShop = decodeURIComponent(resolvedParams.shop || '')
   const shop = getShopByAreaAndSlug(decodedArea, decodedShop)
   
   if (!shop) {
@@ -37,7 +39,7 @@ export default function ShopPage({ params }: ShopPageProps) {
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href={`/${params.area}`}>{decodedArea}</Link>
+            <Link href={`/${resolvedParams.area}`}>{decodedArea}</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
@@ -52,10 +54,10 @@ export default function ShopPage({ params }: ShopPageProps) {
     <>
       <Header breadcrumb={breadcrumb} />
       <div className="container mx-auto px-4 py-8">
-        <Link href={`/${params.area}`}>
+        <Link href={`/${resolvedParams.area}`}>
           <Button variant="ghost" className="mb-4">
             <ArrowLeft className="h-4 w-4 mr-2" />
-            {decodedArea}のお店一覧に戻る
+            {decodedArea}の街かどへ戻る
           </Button>
         </Link>
       <div className="max-w-3xl mx-auto">
@@ -66,10 +68,14 @@ export default function ShopPage({ params }: ShopPageProps) {
           <h1 className="text-3xl font-bold mb-2">{shop.name}</h1>
           <div className="text-muted-foreground mb-2">{shop.address}</div>
           <div className="mb-2">{shop.description}</div>
-          <div className="flex flex-wrap gap-1 mb-4">
-            {shop.tags.map((tag) => (
-              <span key={tag} className="bg-gray-200 dark:bg-gray-700 rounded px-2 py-0.5 text-xs">{tag}</span>
-            ))}
+          <div className="mb-4">
+            <TagDisplay 
+              tags={shop.tags}
+              priceTags={shop.price_tags}
+              sceneTags={shop.scene_tags}
+              accessTags={shop.access_tags}
+              businessTags={shop.business_tags}
+            />
           </div>
         </div>
         <article className="prose prose-gray dark:prose-invert max-w-none">

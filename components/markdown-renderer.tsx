@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image"
 import ReactMarkdown from "react-markdown"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
@@ -44,10 +46,31 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
             )
           },
           a: ({ href, children, ...props }: any) => {
-            if (href?.startsWith('tel:')) {
-              return <a href={href} {...props}>{children}</a>
+            // tel:、mailto:、sms:スキームの場合は同じタブで開く（電話、メール、SMSアプリが起動）
+            if (href?.startsWith('tel:') || href?.startsWith('mailto:') || href?.startsWith('sms:')) {
+              return (
+                <a 
+                  href={href}
+                  className="text-blue-600 hover:text-blue-800 underline"
+                  {...props}
+                >
+                  {children}
+                </a>
+              );
             }
-            return <a href={href} target="_blank" rel="noopener noreferrer" {...props}>{children}</a>
+            
+            // 外部リンクの場合は新しいタブで開く
+            return (
+              <a 
+                href={href} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 underline"
+                {...props}
+              >
+                {children}
+              </a>
+            );
           },
           h1: ({ children }: any) => <h1 className="text-3xl font-bold mt-8 mb-4 text-foreground">{children}</h1>,
           h2: ({ children }: any) => <h2 className="text-2xl font-semibold mt-6 mb-3 text-foreground">{children}</h2>,

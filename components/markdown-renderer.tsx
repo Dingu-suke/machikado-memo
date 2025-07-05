@@ -108,7 +108,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
                 className="text-blue-600 hover:text-blue-800 underline"
                 {...props}
               >
-                {children}
+                🌐 {children}
               </a>
             );
           },

@@ -92,7 +92,7 @@ export function GoogleMap({ address, type = 'both', className = '' }: GoogleMapP
   if (type === 'map') {
     return (
       <div className={`my-8 ${className}`}>
-        <MapFrame url={mapUrl} title="📍 店舗位置" address={address} />
+        <MapFrame url={mapUrl} title="店舗位置" address={address} />
       </div>
     )
   }
@@ -113,7 +113,7 @@ export function GoogleMap({ address, type = 'both', className = '' }: GoogleMapP
   return (
     <div className={`my-8 ${className}`}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <MapFrame url={mapUrl} title="📍 店舗位置" address={address} />
+        <MapFrame url={mapUrl} title="店舗位置" address={address} />
         {streetViewUrl ? (
           <StreetViewFrame url={streetViewUrl} address={address} />
         ) : (

@@ -1,8 +1,9 @@
-import ReactMarkdown from "react-markdown"
-import { tomorrow } from "react-syntax-highlighter/dist/esm/styles/prism"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import remarkGfm from "remark-gfm"
 import Image from "next/image"
+import ReactMarkdown from "react-markdown"
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { tomorrow } from "react-syntax-highlighter/dist/esm/styles/prism"
+import rehypeRaw from "rehype-raw"
+import remarkGfm from "remark-gfm"
 
 interface MarkdownRendererProps {
   content: string
@@ -13,6 +14,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
     <div className="prose prose-gray dark:prose-invert max-w-none">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeRaw]}
         components={{
           code({ node, inline, className, children, ...props }: any) {
             const match = /language-(\w+)/.exec(className || "")
@@ -40,6 +42,12 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
                 />
               </div>
             )
+          },
+          a: ({ href, children, ...props }: any) => {
+            if (href?.startsWith('tel:')) {
+              return <a href={href} {...props}>{children}</a>
+            }
+            return <a href={href} target="_blank" rel="noopener noreferrer" {...props}>{children}</a>
           },
           h1: ({ children }: any) => <h1 className="text-3xl font-bold mt-8 mb-4 text-foreground">{children}</h1>,
           h2: ({ children }: any) => <h2 className="text-2xl font-semibold mt-6 mb-3 text-foreground">{children}</h2>,

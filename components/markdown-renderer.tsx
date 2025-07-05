@@ -75,7 +75,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
               return (
                 <a 
                   href={href}
-                  className="text-green-700 hover:text-green-600 underline font-bold"
+                  className="text-green-600 hover:text-green-700 underline font-bold"
                   onClick={(e) => {
                     // 明示的にリンクを開く処理を追加
                     window.location.href = href;
